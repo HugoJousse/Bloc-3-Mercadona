@@ -14,10 +14,10 @@
 	<name>webapp</name>
 	<description>Mercadona list product web app</description>
 	<properties>
-		<java.version>19.0.2</java.version>
+		<java.version>17</java.version>
 
-			<maven.compiler.source>19.0.2</maven.compiler.source>
-			<maven.compiler.target>19.0.2</maven.compiler.target>
+			<maven.compiler.source>17</maven.compiler.source>
+			<maven.compiler.target>17</maven.compiler.target>
 
 	</properties>
 	<dependencies>
