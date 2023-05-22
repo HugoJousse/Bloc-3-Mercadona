@@ -79,7 +79,7 @@ public class UserController {
             return "accountEdit";
         }
         userService.editUser(user);
-        return "index";
+        return "redirect:/";
     }
 
     /**
