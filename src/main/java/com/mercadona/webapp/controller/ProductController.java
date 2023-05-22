@@ -74,13 +74,13 @@ public class ProductController {
                 User connectedUser = userService.getUserByPseudo(auth.getName());
                 product.setUser(connectedUser);
                 productService.saveProduct(file, product);
-                return "addProduct";
+                return "redirect:/products";
             }
             //If an already created category is selected
             User connectedUser = userService.getUserByPseudo(auth.getName());
             product.setUser(connectedUser);
             productService.saveProduct(file, product);
-            return "addProduct";
+            return "redirect:/products";
         }
 
     @GetMapping("/products/edit/{id}")

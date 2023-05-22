@@ -7,12 +7,12 @@ const restrictPass = document.getElementById("restrictPass");
 const passConf = document.getElementById("passConf");
 const restrictPassConf = document.getElementById("restrictPassConf");
 const form = document.getElementById("form");
-const submitButton = document.getElementById("submitButton");
+var submitButton = document.getElementById("submitButton");
 
 var pseudoVerif = false;
 var passVerif = false;
 var passConfVerif = false;
-
+submitButton.disabled = true;
 function Verif() {
    if(pseudoVerif == true && passVerif == true && passConfVerif == true){
     submitButton.disabled = false;

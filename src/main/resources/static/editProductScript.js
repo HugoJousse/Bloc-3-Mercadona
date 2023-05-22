@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     const newCategory = document.getElementById("newCategory");
     const restrictCategory = document.getElementById("restrictCategory");
 
-    const submitButton = document.getElementById("submitButton");
+     submitButton = document.getElementById("submitButton");
     
     
 

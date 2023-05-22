@@ -10,6 +10,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //Trouver les utilisateurs par identifiant
     User findByPseudo(String pseudo);
 
+    User findById(long id);
+
     //Compter les utilisateurs dans la bdd
     long count();
 

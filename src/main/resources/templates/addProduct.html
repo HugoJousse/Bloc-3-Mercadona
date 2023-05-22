@@ -16,6 +16,7 @@
         color : #ffffff;
         }
     </style>
+    <script type="text/javascript" th:src="@{/addProductScript.js}"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-lg navbar-light" style="background: rgb(24,26,31);
@@ -42,6 +43,9 @@ background: linear-gradient(90deg, rgba(24,26,31,1) 0%, rgba(32,52,66,1) 100%);
                 <a class="nav-link active" th:href="@{/products/add}">Ajouter un produit<span class="sr-only"></span></a>
             </li>
             <li sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/accountOptions}">Options compte<span class="sr-only"></span></a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
                 <form name="logoutForm" th:action="@{/logout}" method="post">
                     <input type="submit" class="btn btn-link" value="Se déconnecter"/>
                 </form>
@@ -53,27 +57,30 @@ background: linear-gradient(90deg, rgba(24,26,31,1) 0%, rgba(32,52,66,1) 100%);
 <div class="d-flex justify-content-center">
     <div class="card">
         <div class="card-header bg-secondary text-white">
-            Catégorie
+            Ajouter un produit
         </div>
         <div class="card-body">
             <form th:action="@{/products/adding}" method="POST" enctype="multipart/form-data">
-                <input type="text" placeholder="nom produit" class="form-control" th:field="${product.name}"><br>
-                <input class="form-control" type="file" id="formFile" name="file">
-                <small id="restrictImage" class="text-form">Choisir une image du produit</small><br><br>
-                <textarea class="form-control" placeholder="description" th:field="${product.description}"></textarea><br>
-                <input type="text" placeholder="prix" class="form-control" th:field="${product.price}">
-                <small id="restrictPrix" class="text-form">Le prix n'accepte que des chiffres</small><br><br>
-                <input type="text" placeholder="nouvelle catégorie" class="form-control" th:field="${newCategory.nameCategory}">
-                <small id="restrictCategory" class="text-form">Le nom de la catégorie doit faire entre 3 et 25 caractères</small><br><br>
+                <input type="text" placeholder="nom produit" id="nameProduct" class="form-control" th:field="${product.name}">
+                <small id="restrictName" class="text-form">Le nom doit faire entre 3 et 25 caractères</small><br><br>
+                <input class="form-control" type="file" id="formFile" name="file" accept="image/png, image/jpeg, image/jpg">
+                <small id="restrictImage" class="text-form">Choisir une image du produit dans un de ces formats : png, jpeg, jpg</small><br><br>
+                <textarea class="form-control" id="description" placeholder="description" th:field="${product.description}"></textarea>
+                <small id="restrictDescription" class="text-form">Une description doit contenir entre 10 et 255 caractères</small><br><br>
+                <input type="number" id="price" step="0.01" min="0" placeholder="prix" class="form-control" th:field="${product.price}">
+                <small id="restrictPrice" class="text-form">Le prix n'accepte que des chiffres</small><br><br>
+                <input type="text" id="newCategory" placeholder="nouvelle catégorie" class="form-control" th:field="${newCategory.nameCategory}">
+                <small id="restrictNewCategory" class="text-form">Le nom de la catégorie doit faire entre 3 et 25 caractères</small><br><br>
                 <div th:if="${categoryExist != null}">
                     <p th:text="${categoryExist}" class="alert alert-danger"></p><br>
                 </div>
-                <select th:field="${product.category}" class="form-select">
+                <select id="category" th:field="${product.category}" class="form-select">
                     <option th:each="category: ${categories}"
                             th:value="${category.id}"
                             th:text="${category.nameCategory}"></option>
-                </select><br>
-                <input type="submit" value="Ajouter Produit" class="btn btn-primary">
+                </select>
+                <small id="restrictCategory" class="text-form">Si pas de nouvelle catégorie renseignée, sélectionner une catégorie existante</small><br><br>
+                <input type="submit" id="submitButton" value="Ajouter Produit" class="btn btn-primary">
             </form>
 
         </div>

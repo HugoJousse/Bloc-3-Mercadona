@@ -8,7 +8,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <title>Enregistrer un compte</title>
+    <title>Modifier le compte</title>
     <style>
         .btn-link {
         text-decoration: none;
@@ -38,13 +38,13 @@ background: linear-gradient(90deg, rgba(24,26,31,1) 0%, rgba(32,52,66,1) 100%);
                 <a class="nav-link" th:href="@{/log}">Se connecter<span class="sr-only"></span></a>
             </li>
             <li class="nav-item active" sec:authorize="isAuthenticated()">
-                <a class="nav-link active" th:href="@{/register}">Créer un compte Admin<span class="sr-only"></span></a>
+                <a class="nav-link" th:href="@{/register}">Créer un compte Admin<span class="sr-only"></span></a>
             </li>
             <li sec:authorize="isAuthenticated()">
                 <a class="nav-link" th:href="@{/products/add}">Ajouter un produit<span class="sr-only"></span></a>
             </li>
             <li sec:authorize="isAuthenticated()">
-                <a class="nav-link" th:href="@{/accountOptions}">Options compte<span class="sr-only"></span></a>
+                <a class="nav-link active" th:href="@{/accountOptions}">Options compte<span class="sr-only"></span></a>
             </li>
             <li sec:authorize="isAuthenticated()">
                 <form name="logoutForm" th:action="@{/logout}" method="post">
@@ -57,21 +57,10 @@ background: linear-gradient(90deg, rgba(24,26,31,1) 0%, rgba(32,52,66,1) 100%);
 <div class="d-flex justify-content-center">
     <div class="card">
         <div class="card-header text-white bg-secondary">
-            S'enregistrer
+            Modifier son compte :
         </div>
         <div class="card-body">
-            <form th:action="@{/registering}" id="form" th:object="${user}" method="POST">
-                <input type="text" id="pseudo" placeholder="pseudo" class="form-control" th:field="*{pseudo}">
-                    <small id="restrictPseudo" class="text-form">Le pseudo doit contenir entre 5 et 25 caractères</small><br><br>
-                    <div th:if="${samePseudo != null}">
-                        <p th:text="${samePseudo}" class="alert alert-danger"></p><br>
-                    </div>
-                    <input type="password" id="password" placeholder="mot de passe" class="form-control" th:field="*{password}"/>
-                    <small id="restrictPass" class="text-form">Le mot de passe doit contenir entre 10 et 25 caractères</small><br><br>
-                    <input type="password" id="passConf" placeholder="confirmation mot de passe" class="form-control border-left-0 border">
-                    <small id="restrictPassConf" class="text-form">Les mots de passes doivent être identiques</small><br><br>
-                    <input type="submit" id="submitButton" value="S'enregister" class="btn btn-primary">
-            </form>
+            <a th:href="@{/account/edit/{id}(id=${user.id})}" class="btn btn-primary">Modifier</a>
         </div>
     </div>
 </div>
