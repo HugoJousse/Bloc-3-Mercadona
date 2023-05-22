@@ -62,11 +62,16 @@ public class UserController {
 
     @GetMapping("/account/edit/{id}")
     public String accountEdit(Model model, @ModelAttribute("id") long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getUserByPseudo(authentication.getName());
         User user = userService.getUserById(id);
-        String pseudo = user.getPseudo();
-        model.addAttribute("user", user);
-        model.addAttribute("pseudo", pseudo);
-        return "accountEdit";
+        if(currentUser.getPseudo() == user.getPseudo()) {
+            String pseudo = user.getPseudo();
+            model.addAttribute("user", user);
+            model.addAttribute("pseudo", pseudo);
+            return "accountEdit";
+        }
+        return "redirect:/accountOptions";
     }
 
     @PostMapping("/account/edit/{id}")

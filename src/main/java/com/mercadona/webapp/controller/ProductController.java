@@ -47,6 +47,7 @@ public class ProductController {
     @GetMapping("/products/add")
     public String addProduct(Model model) {
         List<Category> categories = categoryService.getAll();
+
         model.addAttribute("categories", categories);
         model.addAttribute("newCategory", new Category());
         model.addAttribute("product", new Product());
@@ -65,6 +66,10 @@ public class ProductController {
                 //Check if category name already exist
                 if(categoryService.isCategoryNameExist(newCategory.getNameCategory())) {
                     model.addAttribute("categoryExist", "Cette catégorie existe déjà!");
+                    List<Category> categories = categoryService.getAll();
+                    model.addAttribute("categories", categories);
+                    model.addAttribute("newCategory", new Category());
+                    model.addAttribute("product", new Product());
                     return "addProduct";
                 }
                 //Register the new category and add it to product with the connected user data

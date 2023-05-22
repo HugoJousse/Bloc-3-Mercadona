@@ -42,7 +42,8 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/products/add", "/products/edit/{id}", "/register").authenticated()
+                        .requestMatchers("/products/add", "/products/edit/{id}",
+                                "/products/delete/{id}", "/register", "/accountOptions", "/account/edit/{id}").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
