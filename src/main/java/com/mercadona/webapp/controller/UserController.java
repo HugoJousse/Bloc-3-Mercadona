@@ -23,7 +23,8 @@ public class UserController {
     @GetMapping("/log")
     public String login(Model model){
         if(!userService.isUsersRegistered()){
-            return "redirect:/register";
+            model.addAttribute("user", new User());
+            return "register";
         }
         return "login";
     }

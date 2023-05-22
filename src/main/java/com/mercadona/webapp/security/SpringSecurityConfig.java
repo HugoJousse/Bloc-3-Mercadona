@@ -51,12 +51,11 @@ public class SpringSecurityConfig {
                         .defaultSuccessUrl("/")
                 )
                 .logout((logout) -> logout.logoutUrl("/logout"))
+                .requiresChannel()
+                    .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                    .requiresSecure()
+                .and()
                 .build();
-                //Add for Heroku
-                //.requiresChannel()
-                    //.requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                    //.requiresSecure()
-                //.and()
 
     }
 
