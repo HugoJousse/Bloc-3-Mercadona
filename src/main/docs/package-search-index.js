@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.mercadona.webapp"},{"l":"com.mercadona.webapp.controller"},{"l":"com.mercadona.webapp.model"},{"l":"com.mercadona.webapp.repository"},{"l":"com.mercadona.webapp.security"},{"l":"com.mercadona.webapp.service"}];updateSearchResults();

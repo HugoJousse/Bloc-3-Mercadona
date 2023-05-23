@@ -29,9 +29,9 @@ public class ProductController {
     UserServiceImpl userService;
 
     /**
-     *
+     * show the template of the list of products
      * @param model
-     * @return String
+     * @return String : template of the list of products
      */
     @GetMapping("/products")
     public String getProducts(Model model){
@@ -43,7 +43,11 @@ public class ProductController {
         return "products";
     }
 
-    //Show the product register form
+    /**
+     * Show the product register form
+     * @param model
+     * @return String : template of product register form
+     */
     @GetMapping("/products/add")
     public String addProduct(Model model) {
         List<Category> categories = categoryService.getAll();
@@ -54,7 +58,16 @@ public class ProductController {
         return "addProduct";
     }
 
-    //Register a new product
+    /**
+     * Add a product
+     * @param newCategory Category object of a possible new category
+     * @param product The new product to save
+     * @param file MutlipartFile
+     * @param model
+     * @param auth
+     * @return String template : list of products if the product is registered, else the create product form
+     * @throws IOException
+     */
     @PostMapping("/products/adding")
         public String addingProducts(@ModelAttribute("newCategory") Category newCategory,
                                      @ModelAttribute("product") Product product,
@@ -88,6 +101,12 @@ public class ProductController {
             return "redirect:/products";
         }
 
+    /**
+     * Show the edit product form
+     * @param id the id of the current product to edit
+     * @param model
+     * @return String template : list of products if the product is registered, else the edit product form
+     */
     @GetMapping("/products/edit/{id}")
     public String showEditProduct(@PathVariable("id") long id,
                                   Model model){
@@ -100,12 +119,27 @@ public class ProductController {
         return "editProduct";
     }
 
+    /**
+     * Delete the selected product
+     * @param id the id of the current product to delete
+     * @return String template : list of products
+     */
     @GetMapping("/products/delete/{id}")
         public String deleteProduct(@PathVariable("id") long id){
             productService.deleteProduct(id);
             return "redirect:/products";
         }
 
+    /**
+     * Edit a product
+     * @param id
+     * @param newCategory
+     * @param product
+     * @param file
+     * @param model
+     * @return String template : list of products if the product is registered, else the edit product form
+     * @throws IOException
+     */
     @PostMapping("/products/editing/{id}")
     public String EditProduct(@PathVariable("id") long id,
                               @ModelAttribute("newCategory") Category newCategory,

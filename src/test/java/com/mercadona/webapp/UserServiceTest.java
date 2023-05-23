@@ -46,4 +46,14 @@ public class UserServiceTest {
 
         assertFalse(result);
     }
+
+    @Test
+    public void testIsPseudoExist() {
+        //Case no user using this pseudo
+        String test = "test";
+        when(userRepository.findByPseudo(test)).thenReturn(null);
+        boolean result = userService.isPseudoExist(test);
+
+        assertFalse(result);
+    }
 }

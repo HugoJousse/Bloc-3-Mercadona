@@ -27,6 +27,12 @@ public class ProductServiceImpl implements ProductService{
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
     DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 
+    /**
+     * Save a product
+     * @param file MultipartFile object
+     * @param product Product object to save
+     * @throws IOException Exceptions during the image registering
+     */
     @Override
     public void saveProduct(MultipartFile file, Product product) throws IOException {
         product.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
@@ -37,13 +43,24 @@ public class ProductServiceImpl implements ProductService{
 
     }
 
+    /**
+     * Calculate a discounted price
+     * @param price float
+     * @param discount float
+     * @return float : result
+     */
     public float reducePrice(float price, float discount) {
         float reducedPrice = price - price * (discount / 100f);
         symbols.setDecimalSeparator('.');
         decimalFormat.setDecimalFormatSymbols(symbols);
         return Float.parseFloat(decimalFormat.format(reducedPrice));
     }
-    
+
+    /**
+     * Check the dates applied for a discount and the current date
+     * if the current date is not between the start and the end of the discount, set the discount to null
+     * @param products List<Products>
+     */
     public void checkDiscountDate(List<Product> products) {
         for (int ii =0; ii < products.size(); ii++) {
             if(products.get(ii).getDiscount() != 0 &&
@@ -61,8 +78,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     /**
-     *
-     * @param product
+     * edit a product without new image
+     * @param product Product
      */
 
     public void editProduct(Product product) {
@@ -84,6 +101,12 @@ public class ProductServiceImpl implements ProductService{
         productRepository.save(productEdit);
     }
 
+    /**
+     * edit a product with a new image
+     * @param file MultipartedFile
+     * @param product Product
+     * @throws IOException Exceptions during the image registering
+     */
     public void editProductWithImage(MultipartFile file, Product product) throws IOException {
         editProduct(product);
         Product productEdit = productRepository.findById(product.getId()).get();
@@ -94,15 +117,28 @@ public class ProductServiceImpl implements ProductService{
         productRepository.save(productEdit);
     }
 
+    /**
+     * Delete a product
+     * @param id long
+     */
     @Override
     public void deleteProduct(long id) {
         productRepository.deleteById(id);
     }
 
+    /**
+     * Get a list of products
+     * @return List<Products>
+     */
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
+    /**
+     * get a product by his Id
+     * @param id long
+     * @return Optional<Product>
+     */
     @Override
     public Optional<Product> getProductById(long id) {
         return productRepository.findById(id);

@@ -20,6 +20,11 @@ public class UserController {
         return "index";
     }
 
+    /**
+     * Show the login form
+     * @param model
+     * @return String template : login form
+     */
     @GetMapping("/log")
     public String login(Model model){
         if(!userService.isUsersRegistered()){
@@ -29,6 +34,10 @@ public class UserController {
         return "login";
     }
 
+    /**
+     * logout the actual connected user
+     * @return String tempate : index
+     */
     @GetMapping("/logout")
     public String logout(){
 
@@ -60,26 +69,46 @@ public class UserController {
         return "accountOptions";
     }
 
+    /**
+     * get the template of edit user form
+     * redirect to accountOptions if the user is not the same as the one specified in URL
+     * @param model
+     * @param id
+     * @return String : redirect to accountOptions or redirect to edit user template form
+     */
     @GetMapping("/account/edit/{id}")
     public String accountEdit(Model model, @ModelAttribute("id") long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getUserByPseudo(authentication.getName());
         User user = userService.getUserById(id);
         if(currentUser.getPseudo() == user.getPseudo()) {
-            String pseudo = user.getPseudo();
-            model.addAttribute("user", user);
+            String pseudo = currentUser.getPseudo();
+            model.addAttribute("user", currentUser);
             model.addAttribute("pseudo", pseudo);
             return "accountEdit";
         }
         return "redirect:/accountOptions";
     }
 
+    /**
+     * Edit connected user account
+     * @param id
+     * @param model
+     * @param user
+     * @param pseudo
+     * @return String : redirect to index template
+     */
     @PostMapping("/account/edit/{id}")
     public String setAccount(@PathVariable("id") long id, Model model,
                              @ModelAttribute("user") User user,
-                             @ModelAttribute("pseudo") String pseudo) {
+                             @RequestParam("pseudo") String pseudo) {
+        User currentUser = userService.getUserById(id);
         model.addAttribute("errors", false);
-        if(userService.isPseudoExist(user.getPseudo()) && !user.getPseudo().equals(pseudo)){
+        if(userService.isPseudoExist(user.getPseudo())){
+            if(currentUser.getPseudo().equals(pseudo)) {
+                userService.editUser(user);
+                return "redirect:/";
+            }
             model.addAttribute("samePseudo", "Ce pseudo est déjà utilisé!");
             return "accountEdit";
         }

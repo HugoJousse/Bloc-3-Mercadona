@@ -1,0 +1,6 @@
+com.mercadona.webapp
+com.mercadona.webapp.controller
+com.mercadona.webapp.model
+com.mercadona.webapp.repository
+com.mercadona.webapp.security
+com.mercadona.webapp.service
