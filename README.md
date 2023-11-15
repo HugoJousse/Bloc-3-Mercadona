@@ -17,4 +17,4 @@ Fonctionnalités : <br/>
 
 
 
-Tech : Java Spring Boot, HTML/Thymleaf, CSS/Bootstrap, Javascript, BDD/PostgreSQL
+Tech : Java Spring Boot, HTML/Thymeleaf, CSS/Bootstrap, Javascript, BDD/PostgreSQL
